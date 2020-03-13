@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/register/register",
+    "pages/shark/shark",
+    "pages/test/test"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black",
+    "disableScroll" : true,
+    "enablePullDownRefresh" : true
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "navigateToMiniProgramAppIdList": [
+    "wx7e72bb148564a1b2",
+    "wx9872d5d7c8be7ce6"
+  ],
+  "requiredBackgroundModes" : ["audio"]
+}

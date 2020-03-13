@@ -1,0 +1,294 @@
+<view class='bg_image_box'>
+  <view class='bg_image' style="background:url({{bgUrl}});background-size:100% 100%;"></view>
+  <view class='bg_title' style="background:url({{main_title}});background-size:100% 100%;"></view>
+  <view class='info_top' style="background:url({{info_bg}});background-size:100% 100%;">
+    <view>
+      <image class="info_logo" src="{{logo}}"></image>
+    </view>
+    <view class='info_details'>
+      <view class="marquee">
+        <view class="page-section page-section-spacing swiper">
+          <swiper circular="{{circular}}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" easing-function="linear" vertical>
+            <block wx:for="{{winList}}" wx:for-item="scoreItem" wx:key="*this">
+              <swiper-item>
+                <view class="swiper-item ">{{scoreItem.msg}}</view>
+              </swiper-item>
+            </block>
+          </swiper>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='area'>
+    <view class='area_1' catchtap="toShark">
+      <image class='area_bg no_start' src="{{area_1}}"></image>
+      <view class="start_game start_1">
+        <image src="{{area_start1}}" mode="widthFix"></image>
+      </view>
+    </view>
+    <view class='area_2' catchtap="toBasket">
+      <view class='score_box'>
+        <image class='score_area' src="{{score}}"></image>
+        <view>
+          <image class='score_val' src="{{scoreItem.name}}" wx:for="{{scoreList}}" wx:for-item="scoreItem" wx:for-index="scoreIndex"></image>
+        </view>
+      </view>
+      <view class="start_game start_2">
+        <image src="{{area_start2}}" mode="widthFix"></image>
+      </view>
+      <image class='area_bg no_start' src="{{area_2}}"></image>
+    </view>
+    <view class='area_3' catchtap="changeQw" data-num="1">
+      <image class='area_bg' src="{{area_3}}"></image>
+    </view>
+    <view class='line'>
+      <image class='area_bg' src="{{line}}"></image>
+    </view>
+    <view class='my_gift'>
+      <image class='area_bg' src="{{main_gift}}" catchtap="changeGift" data-num="1"></image>
+    </view>
+  </view>
+</view>
+
+<!-- <view class="anta_modal" wx:if="{{showWQ}}">
+  <view class="anta_modal_box {{showWQ ? 'anta_show' : ''}}">
+    <view class='anta_modal_title'>您还不是【安踏儿童】会员，现在注册即可获得100积分可
+用于参与游戏赢奖品！</view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{modal_zh}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="closeContent"></image>
+    </view>
+  </view>
+  <view>
+    <image class="modal_register" src="{{modal_zh}}"></image>
+  </view>
+</view> -->
+
+<!-- 授权账号   -->
+<view wx:if="{{showAuth}}" class='anta_modal auth'>
+  <view class="anta_modal_box fadeShow">
+    <view class='login_box'>
+      <view class='login_img'>
+        <image src="{{no_login}}"></image>
+      </view>
+      <view class='login_notice'>
+        <view>您尚未登录</view>
+        <view>请先登录再进行操作</view>
+      </view>
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{login_bg}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeAuth" data-num="0"></image>
+    </view>
+    <view>
+      <image class="auth_cancle" src="{{btn_cancel}}" catchtap="changeAuth" data-num="0"></image>
+      <!-- <image class="auth_login" src="{{btn_login}}" catchtap="changeRegister" data-num="1"></image> -->
+      <button class="auth_login" style="background:url({{btn_login}});background-size:cover" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+    </view>
+  </view>
+</view>
+
+
+<!-- 授权手机   -->
+<view class="anta_modal auth_phone" wx:if="{{showPhone}}">
+  <view class="anta_modal_box fadeShow">
+    <view class='anta_modal_title'>
+      <view>关联手机号码</view>
+      <view>解锁更多功能</view>
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{modal_zh}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changePhone" data-num="0"></image>
+    </view>
+    <button class="get_phone" style="background:url({{get_phone}});background-size:cover" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button>
+    <!-- <view class='register_content'>
+          
+      <image class="modal_register" src="{{get_phone}}" catchtap="changePhone" data-num="1"></image>
+    </view> -->
+  </view>
+</view>
+
+
+<!-- 会员 -->
+<view class="anta_modal member" wx:if="{{showMember}}">
+  <view class="anta_modal_box fadeShow">
+    <view class='anta_modal_title'>您还不是【安踏儿童】会员，现在注册即可获得100积分可 用于参与游戏赢奖品！
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{modal_zh}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeMember" data-num="0"></image>
+    </view>
+    <view class='register_content'>
+      <image class="modal_register" src="{{register}}" catchtap="changeRegister" data-num="1"></image>
+    </view>
+  </view>
+</view>
+
+<!-- Kids -->
+<view class="anta_modal qw_store" wx:if="{{showQw}}">
+  <view class="anta_modal_box fadeShow">
+    <view class='anta_modal_title' style="text-align:center" wx:if="{{showActive == 1}}">
+      <view>趣顽商城还在装潢</view>
+      <view>敬请期待！</view>
+    </view>
+    <view class='anta_modal_title' style="text-align:center" wx:else>
+      <view>顽家旋风大投篮还在装潢</view>
+      <view>敬请期待！</view>
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{modal_zh}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeQw" data-num="0"></image>
+    </view>
+    <!-- <view class='register_content'>
+      <image class="modal_register" src="{{register}}"></image>
+    </view> -->
+  </view>
+</view>
+
+<!-- 奖品 -->
+<view class="anta_modal mygift" wx:if="{{showGift}}">
+  <view class="anta_modal_box fadeShow" wx:if="{{hasGift}}">
+    <view class="anta_modal_content">
+      <view class="shandian currency">
+        <image class="{{sequenceListIndex == index ? 'on' : ''}}" wx:for="{{sequenceList}}" wx:key="key{{index}}" src="{{item.url}}"></image>
+      </view>
+      <image class="modal_zh" src="{{gift_bg}}"></image>
+      <view class='get_box'>
+        <!-- 奖品列表 -->
+        <view class='prize' wx:for="{{prizeList}}" wx:for-item="item" wx:for-index="index">
+          <image class='prize_bg' src="{{get_bg}}"></image>
+          <view class='prize_center'>
+            <view class='prize_top'>
+              <view class='prize_img_box'>
+                <image class='prize_info_img' src="{{item.prize_image}}"></image>
+              </view>
+              <view class='prize_top_right'>
+                <view class='prize_title'>{{item.prize_name}}</view>
+                <view class='prize_info_bottom'>
+                  <view>数量 X {{item.number}}</view>
+                  <!-- 领取状态 -->
+                  <view class="gift_box" wx:if="{{item.prize_type == 2 || item.prize_type == 3}}">
+                    <view class='btn_get_gift' catchtap="changeAddress" data-id="{{item.prize_log_id}}" data-num="1" wx:if="{{item.is_receive == 0 && item.prize_type != 3}}">
+                      <view>
+                        <image class='prize_get_img' src="{{draw_get}}"></image>
+                        <text>领取</text>
+                      </view>
+                    </view>
+                    <view class='btn_get_gift' data-num="1" wx:else>
+                      <view>
+                        <image class='prize_get_img' src="{{draw}}"></image>
+                        <text>已领取</text>
+                      </view>
+                    </view>
+                  </view>
+                  <view class="gift_box" wx:else>
+                    <view class='btn_get_gift' catchtap="changeAddress" data-id="{{item.prize_log_id}}" data-num="1">
+                      <view catchtap="toAnta">
+                        <image class='prize_get_img' src="{{draw_get}}"></image>
+                        <text>前往使用</text>
+                      </view>
+                    </view>
+                  </view>
+
+                </view>
+              </view>
+            </view>
+            <view class='prize_bottom'>
+              兑换截止时间: {{item.end_time}}
+            </view>
+          </view>
+        </view>
+      </view>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeGift" data-num="0"></image>
+    </view>
+  </view>
+
+
+  <!-- 未获得奖品 -->
+  <view class="initial" wx:else>
+    <view class="anta_modal_box fadeShow">
+      <view class='anta_modal_title' style="text-align:center">
+        <view>您还未获得奖品</view>
+        <view>快去参与游戏领取吧！</view>
+      </view>
+      <view class="anta_modal_content">
+        <image class="modal_zh" src="{{modal_zh}}"></image>
+        <image class="modal_close" src="{{modal_close}}" catchtap="changeGift" data-num="0"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 留资弹窗 -->
+<view class="anta_modal address" wx:if="{{showAddress}}">
+  <view class="anta_modal_box fadeShow">
+    <view class='address_box'>
+      <view class='address_name' style="background:url({{address_input}});background-size:cover">
+        <input type='text' placeholder-class="address_input" placeholder="姓名" bindinput="getName"></input>
+        <view class='warn_box' wx:if="{{info.nameCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{info.nameCheck}}</text>
+        </view>
+      </view>
+      <view class='address_tel' style="background:url({{address_input}});background-size:cover">
+        <input type='number' maxlength="11" placeholder="手机" placeholder-class="address_input" bindinput="getTel"></input>
+        <view class='warn_box' wx:if="{{info.telCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{info.telCheck}}</text>
+        </view>
+      </view>
+      <view class='address_area' style="background:url({{address_area}});background-size:cover">
+        <textarea class="detailText" placeholder-class="address_input" maxlength="200" placeholder="详细地址" bindinput="getArea" value="{{details}}">
+        </textarea>
+        <view class='warn_box' wx:if="{{info.areaCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{info.areaCheck}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{address_bg}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeAddress" data-num="0"></image>
+    </view>
+    <view class='register_content'>
+      <image class="modal_register" src="{{btn_finish}}" catchtap="submitAddress"></image>
+    </view>
+  </view>
+</view>
+
+
+<!-- 会员注册 -->
+<!-- <view class="anta_modal member_form" wx:if="{{showRegister}}">
+  <view class="anta_modal_box fadeShow">
+    <view class="register_bg">
+      <image class="modal_register" src="{{register_bg}}" catchtap="submitAddress"></image>
+    </view>
+    <view class="register_box" style="background:url({{register_border}});background-size:cover">
+      <view class="register_title">
+        <image class="modal_register" src="{{register_title}}" catchtap="submitAddress"></image>
+      </view>
+      <view class="register_input">
+        <input placeholder="姓名" placeholder-class="address_input" bindBlur="getMemberName"></input>
+      </view>
+      <view class="register_input">
+        <picker bindchange="changeSex" value="{{registerInfo.sex}}" range="{{sexList}}">
+          <view class="picker">
+            <text wx:if="{{registerInfo.sex != ''}}">{{sex[registerInfo.sex].name}}</text>
+            <text class='no_select' wx:else>请选择您的性别</text>
+          </view>
+        </picker>
+      </view>
+      <view class="register_input">
+        <picker mode="date" value="{{registerInfo.birth}}" start="1950-01-01" end="2300-01-01" bindchange="bindDateChange">
+          <view class="picker">
+            <text wx:if="{{registerInfo.birth != ''}}">{{registerInfo.birth}}</text>
+            <text class='no_select' wx:else>请选择您的生日</text>
+          </view>
+        </picker>
+      </view>
+      <view class='register_bottom'>
+        <image class="modal_register" src="{{btn_register}}" catchtap="submitMember"></image>
+      </view>
+    </view>
+  </view>
+</view> -->

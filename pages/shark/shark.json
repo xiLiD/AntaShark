@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "圣诞彩蛋",  
+  "usingComponents": {
+    "getPhoneNumber": "/components/getPhoneNumber/getPhoneNumber"
+  }
+}

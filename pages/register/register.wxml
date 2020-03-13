@@ -1,0 +1,48 @@
+<!-- 会员注册 -->
+<view class="anta_modal member_form" wx:if="{{showRegister}}">
+  <view class="anta_modal_box">
+    <view class="register_bg">
+      <image class="modal_register" src="{{register_bg}}" catchtap="submitAddress"></image>
+    </view>
+    <view class="register_box" style="background:url({{register_border}});background-size:cover">
+      <view class="register_title">
+        <image class="modal_register" src="{{register_title}}" catchtap="submitAddress"></image>
+      </view>
+      <view class="register_input">
+        <input placeholder="姓名" placeholder-class="address_input" bindinput="getMemberName"></input>
+        <view class='warn_box' wx:if="{{registerInfo.nameCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{registerInfo.nameCheck}}</text>
+        </view>
+      </view>
+      <view class="register_input">
+        <picker bindchange="changeSex" value="{{registerInfo.sex}}" range="{{sexList}}">
+          <view class="picker">
+            <text wx:if="{{registerInfo.sex != ''}}">{{sex[registerInfo.sex].name}}</text>
+            <text class='no_select' wx:else>请选择您的性别</text>
+          </view>
+        </picker>
+        <view class='warn_box' wx:if="{{registerInfo.sexCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{registerInfo.sexCheck}}</text>
+        </view>
+      </view>
+      <view class="register_input">
+        <picker mode="date" value="{{registerInfo.birth}}" start="1950-01-01" end="2300-01-01" bindchange="bindDateChange">
+          <view class="picker">
+            <text wx:if="{{registerInfo.birth != ''}}">{{registerInfo.birth}}</text>
+            <text class='no_select' wx:else>请选择您的生日</text>
+          </view>
+        </picker>
+        <view class='warn_box' wx:if="{{registerInfo.birthCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{registerInfo.birthCheck}}</text>
+        </view>
+      </view>
+      <view class='register_bottom'>
+      <image class="modal_register" src="{{btn_register}}" catchtap="registerMember"></image>
+    </view>
+    </view>
+
+  </view>
+</view>

@@ -1,0 +1,350 @@
+<!--index.wxml-->
+<view class="page_box">
+  <view class='snow-animation-container snow1' style="background-image : url({{snow}});background-repeat:no-repeat;background-size:cover"></view>
+  <view class='snow-animation-container snow2' style="background-image : url({{snow}});background-repeat:no-repeat;background-size:cover"></view>
+  <view class='snow-animation-container snow3' style="background-image : url({{snow}});background-repeat:no-repeat;background-size:cover"></view>
+  <view class='snow-animation-container snow4' style="background-image : url({{snow}});background-repeat:no-repeat;background-size:cover"></view>
+  <view class='snow-animation-container snow5' style="background-image : url({{snow}});background-repeat:no-repeat;background-size:cover"></view>
+  <view class="bg_shark" style="background :url({{bgUrl}});background-size :cover;">
+    <view class='shark_box'>
+      <view class='shark_center'>
+
+      </view>
+      <image class='rule' src="{{rule}}" catchtap="changeRule" data-num="1"></image>
+      <view class='shark_global' catchtap="changeActive">
+        <view class="global_top {{!startPrize ? 'show_global' : ''}}">
+          <view>
+            <image class='global no_start' src="{{global}}" mode="widthFix"></image>
+          </view>
+          <!-- <view class=" global_modal_box"></view> -->
+        </view>
+        <view class="global_top rotate_box {{startPrize ?'show_global' : ''}}">
+          <image class="global {{showNum == globalIndex ? 'show' : ''}}" src="{{globalItem}}" mode="widthFix" wx:for="{{globalList}}" wx:for-item="globalItem" wx:for-index="globalIndex"></image>
+        </view>
+        <!-- <view class="seat">
+          
+        </view> -->
+        <image class="seat" src="{{seat}}" mode="widthFix"></image>
+        <view class="shark_shark shark_notice {{showNumber == 1 ? 'show_in_one' : ''}}" catchtap="changeFind" data-num="1">
+          <view class='story_1 story '>1.点击"摇一摇"按钮或摇一摇手机,开始拿彩蛋</view>
+          <image src="{{shark}}"></image>
+        </view>
+
+        <!-- <view class="shark_mygift_box">
+          <view class="{{showNumber == 2 ? 'show_in_one' : ''}}">
+            <view class='story_2 story'>2.参与摇菜单活动,将有机会获得智能音箱、帐篷、羽毛球拍、优惠券等</view>
+            <image class='shark_mygift' src="{{mygift}}" catchtap="changeGift" data-num="1" data-istrue="true"></image>
+          </view>
+
+
+          <view class="shark_score_box flex-between {{showNumber == 3 ? 'show_in_one' : ''}}">
+            <view class='story_3 story'>3.每次摇一摇消耗99积分，可通过注册、做任务获得游戏积分</view>
+            <image class='shark_score' src="{{myscore}}"></image>
+            <view class="s_title">
+              <image class="s_title_img" src="{{s_title}}" mode="widthFix"></image>
+            </view>
+            <view class='shark_score_val font_shark'>{{my_score}}</view>
+          </view>
+        </view> -->
+
+        <view class="shark_notice btn_myscore {{showNumber == 2 ? 'show_in_one' : ''}}">
+          <view class='story_2 story'>2.参与摇彩蛋活动,将有机会获得智能音箱、帐篷、羽毛球拍等</view>
+          <image class='shark_mygift story' src="{{mygift}}" catchtap="changeGift" data-num="1"></image>
+        </view>
+
+
+        <view class="shark_score_box shark_notice flex-between {{showNumber == 3 ? 'show_in_one' : ''}}">
+          <view class='story_3 story'>3.每次摇一摇消耗99积分，可通过注册、做任务获得游戏积分</view>
+          <image class='shark_score' src="{{myscore}}"></image>
+          <view class="s_title">
+            <image class="s_title_img" src="{{s_title}}" mode="widthFix"></image>
+          </view>
+          <view class='shark_score_val font_shark'>{{my_score}}</view>
+        </view>
+
+        <view class="shark_story" wx:if="{{showNumber < 4}}">
+
+        </view>
+      </view>
+
+
+
+
+      <!-- <image class="global_modal global_left {{active  == 1 ? 'active' : ''}}" src='{{global}}'></image>
+      <image class='global_modal global_right' src='{{global}}'></image> -->
+    </view>
+  </view>
+</view>
+
+<!-- 
+<view class="rule_modal {{showRule ? 'show_rule' : ''}}" >
+   <view class='modal_shadow' wx:if="{{showRule}}" catchtap="showRule" data-num="0"></view> 
+   <view class='rule_close'></view>
+</view> -->
+
+<getPhoneNumber bindgetPhoneNumber="getPhoneNumber" wx:if="{{isGetPhoneNumber}}"></getPhoneNumber>
+
+
+<!-- 规则 -->
+<view class="anta_modal game_rule" wx:if="{{showRule}}">
+  <view class="anta_modal_box fadeShow">
+    <view class="shandian currency">
+      <image class="{{sequenceListIndex == index ? 'on' : ''}}" wx:for="{{sequenceList}}" wx:key="key{{index}}" src="{{item.url}}"></image>
+    </view>
+    <view class='rule_title'>
+      <view>
+        <text class="radius_box">1</text> 用户参与一次彩蛋机需要消耗99积分参与；</view>
+      <view>
+        <text class="radius_box">2</text> 摇一摇参与彩蛋机,即可获得积分、实物奖励、安踏儿童下线优惠券。</view>
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{rule_bg}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeRule" data-num="0"></image>
+    </view>
+  </view>
+</view>
+
+
+<!-- 奖品 -->
+<view class="anta_modal mygift" wx:if="{{showGift}}">
+  <view class="anta_modal_box fadeShow" wx:if="{{hasGift}}">
+    <view class="anta_modal_content">
+      <view class="shandian currency">
+        <image class="{{sequenceListIndex == index ? 'on' : ''}}" wx:for="{{sequenceList}}" wx:key="key{{index}}" src="{{item.url}}"></image>
+      </view>
+      <image class="modal_zh" src="{{gift_bg}}"></image>
+      <view class='get_box'>
+        <!-- 奖品列表 -->
+        <view class='prize' wx:for="{{prizeList}}" wx:for-item="item" wx:for-index="index">
+          <image class='prize_bg' src="{{get_bg}}"></image>
+          <view class='prize_center'>
+            <view class='prize_top'>
+              <view class='prize_img_box'>
+                <image class='prize_info_img' src="{{item.prize_image}}"></image>
+              </view>
+              <view class='prize_top_right'>
+                <view class='prize_title'>{{item.prize_name}}</view>
+                <view class='prize_info_bottom'>
+                  <view>数量 X {{item.number}}</view>
+                  <!-- 奖品状态 -->
+                  <view class="gift_box" wx:if="{{item.prize_type == 2 || item.prize_type == 3}}">
+                    <view class='btn_get_gift' catchtap="changeAddress" data-id="{{item.prize_log_id}}" data-num="1" wx:if="{{item.is_receive == 0 && item.prize_type != 3}}">
+                      <view>
+                        <image class='prize_get_img' src="{{draw_get}}"></image>
+                        <text>领取</text>
+                      </view>
+                    </view>
+                    <view class='btn_get_gift' data-num="1" wx:else>
+                      <view>
+                        <image class='prize_get_img' src="{{draw}}"></image>
+                        <text>已领取</text>
+                      </view>
+                    </view>
+                  </view>
+                  <view class="gift_box" wx:else>
+                    <view class='btn_get_gift' catchtap="changeAddress" data-id="{{item.prize_log_id}}" data-num="1">
+                      <view catchtap="toAnta">
+                        <image class='prize_get_img' src="{{draw_get}}"></image>
+                        <text>前往使用</text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view class='prize_bottom'>
+              兑换截止时间: {{item.end_time}}
+            </view>
+          </view>
+        </view>
+      </view>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeGift" data-num="0"></image>
+    </view>
+  </view>
+
+
+  <!-- 未获得奖品 -->
+  <view class="initial" wx:else>
+    <view class="anta_modal_box fadeShow">
+      <view class='anta_modal_title' style="text-align:center">
+        <view>您还未获得奖品</view>
+        <view>快去参与游戏领取吧！</view>
+      </view>
+      <view class="anta_modal_content">
+        <image class="modal_zh" src="{{modal_zh}}"></image>
+        <image class="modal_close" src="{{modal_close}}" catchtap="changeGift" data-num="0"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- 开奖 -->
+<view class="anta_modal find_prize" wx:if="{{findPrize}}">
+  <!-- 实物奖品 -->
+  <view class="anta_modal_box fadeShow" wx:if="{{prizeInfo.prize_type == 1 || prizeInfo.prize_type == 2 || prizeInfo.prize_type == 3}}">
+    <view class='start_top'>
+      <image class="modal_zh" src="{{start_top}}"></image>
+    </view>
+    <view class="prize_box">
+      <view class="shandian currency">
+        <image class="{{sequenceListIndex == index ? 'on' : ''}}" wx:for="{{sequenceList}}" wx:key="key{{index}}" src="{{item.url}}"></image>
+      </view>
+      <view class='find_info'>
+        <view class='goods'>
+          <image src="{{prizeInfo.prize_image}}"></image>
+        </view>
+        <view class='goods_title'>
+          <text>{{prizeInfo.prize_name}}</text> </view>
+        <view class='goods_search'>请在
+          <text>【我的奖品】</text>处查看</view>
+      </view>
+      <view class="anta_modal_content">
+        <image class="modal_zh" src="{{start_bg}}"></image>
+        <image class="modal_close" src="{{modal_close}}" catchtap="changeFind" data-num="0"></image>
+      </view>
+      <view class='start_find' catchtap="changeGift" data-num="1" data-istrue="true">
+        <image class="modal_zh" src="{{start_find}}"></image>
+      </view>
+    </view>
+  </view>
+  <!-- 积分奖品 -->
+  <!-- <view class="anta_modal_box fadeShow" wx:if="{{prizeInfo.prize_type == 3}}">
+    <view class='start_top'>
+      <image class="modal_zh" src="{{start_top}}"></image>
+    </view>
+
+    <view class="prize_box">
+      <view class='find_info'>
+        <view class='goods'>
+          <image src="{{prizeInfo.prize_image}}"></image>
+        </view>
+        <view class='goods_title'>
+          <text>{{prizeInfo.prize_name}}</text>
+        </view>
+        <view class="other_title">已为您领取</view>
+      </view>
+      <view class="anta_modal_content">
+        <image class="modal_zh" src="{{start_bg}}"></image>
+        <image class="modal_close" src="{{modal_close}}" catchtap="changeFind" data-num="0"></image>
+      </view>
+    </view>
+  </view> -->
+  <!-- 谢谢参与 -->
+  <view class="initial no_get" wx:if="{{prizeInfo.prize_type == 4}}">
+    <view class="anta_modal_box fadeShow">
+      <view class='anta_modal_title' style="text-align:center">
+        <view>
+          <image class="thanks" src="{{thanks}}"></image>
+        </view>
+      </view>
+      <view class="anta_modal_content">
+        <image class="modal_zh" src="{{modal_zh}}"></image>
+        <image class="modal_close" src="{{modal_close}}" catchtap="changeFind" data-num="0"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- 留资弹窗 -->
+<view class="anta_modal address" wx:if="{{showAddress}}">
+  <view class="anta_modal_box fadeShow">
+    <view class='address_box'>
+      <view class='address_name' style="background:url({{address_input}});background-size:cover">
+        <input type='text' placeholder-class="address_input" placeholder="姓名" bindinput="getName"></input>
+        <view class='warn_box' wx:if="{{info.nameCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{info.nameCheck}}</text>
+        </view>
+      </view>
+      <view class='address_tel' style="background:url({{address_input}});background-size:cover">
+        <input type="text" maxlength="11" placeholder="手机" placeholder-class="address_input" bindinput="getTel"></input>
+        <view class='warn_box' wx:if="{{info.telCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{info.telCheck}}</text>
+        </view>
+      </view>
+      <view class='address_area' style="background:url({{address_area}});background-size:cover">
+        <textarea class="detailText" placeholder-class="address_input" maxlength="200" placeholder="详细地址" bindinput="getArea" value="{{details}}">
+        </textarea>
+        <view class='warn_box' wx:if="{{info.areaCheck}}">
+          <image class='warn_notice' src="{{warn_notice}}"></image>
+          <text>{{info.areaCheck}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{address_bg}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeAddress" data-num="0"></image>
+    </view>
+    <view class='register_content'>
+      <image class="modal_register" src="{{btn_finish}}" catchtap="submitAddress"></image>
+    </view>
+  </view>
+</view>
+
+<view class="page_modal_bg" wx:if="{{!show_shark}}"></view>
+
+<audio src="{{IMGURL}}/video/shark_audio.mp3" id="myAudio" controls loop="false"></audio>
+
+
+<!-- 授权账号   -->
+<view wx:if="{{showAuth}}" class='anta_modal auth'>
+  <view class="anta_modal_box fadeShow">
+    <view class='login_box'>
+      <view class='login_img'>
+        <image src="{{no_login}}"></image>
+      </view>
+      <view class='login_notice'>
+        <view>您尚未登录</view>
+        <view>请先登录再进行操作</view>
+      </view>
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{login_bg}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeAuth" data-num="0"></image>
+    </view>
+    <view>
+      <image class="auth_cancle" src="{{btn_cancel}}" catchtap="changeAuth" data-num="0"></image>
+      <!-- <image class="auth_login" src="{{btn_login}}" catchtap="changeRegister" data-num="1"></image> -->
+      <button class="auth_login" style="background:url({{btn_login}});background-size:cover" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
+    </view>
+  </view>
+</view>
+
+
+<!-- 授权手机   -->
+<view class="anta_modal auth_phone" wx:if="{{showPhone}}">
+  <view class="anta_modal_box fadeShow">
+    <view class='anta_modal_title'>
+      <view>关联手机号码</view>
+      <view>解锁更多功能</view>
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{modal_zh}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changePhone" data-num="0"></image>
+    </view>
+    <button class="get_phone" style="background:url({{get_phone}});background-size:cover" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"></button>
+    <!-- <view class='register_content'>
+          
+      <image class="modal_register" src="{{get_phone}}" catchtap="changePhone" data-num="1"></image>
+    </view> -->
+  </view>
+</view>
+
+
+<!-- 会员 -->
+<view class="anta_modal member" wx:if="{{showMember}}">
+  <view class="anta_modal_box fadeShow">
+    <view class='anta_modal_title'>您还不是【安踏儿童】会员，现在注册即可获得100积分可 用于参与游戏赢奖品！
+    </view>
+    <view class="anta_modal_content">
+      <image class="modal_zh" src="{{modal_zh}}"></image>
+      <image class="modal_close" src="{{modal_close}}" catchtap="changeMember" data-num="0"></image>
+    </view>
+    <view class='register_content'>
+      <image class="modal_register" src="{{register}}" catchtap="changeRegister" data-num="1"></image>
+    </view>
+  </view>
+</view>

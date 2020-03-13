@@ -1,0 +1,2 @@
+<input bindinput="aa" value="21231"></input>
+<view bindtap="aa">1212</view>
